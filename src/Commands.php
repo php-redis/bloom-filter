@@ -1,5 +1,5 @@
 <?php
-namespace xming\filters;
+namespace phpredis\filters;
 
 class Commands
 {
