@@ -1,5 +1,5 @@
 <?php
-namespace phpredis\filters;
+namespace PHPRedis\Filters;
 
 class Commands
 {
