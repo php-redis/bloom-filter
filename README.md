@@ -32,6 +32,7 @@ $bloomFilter = new BloomFilter(['host' => '192.168.20.6', 'part'=>6380, 'auth' =
 $bool = $bloomFilter->reserve('key', 0.001, 1000);
 // 过滤器添加单个值
 $bool = $bloomFilter->add('key', 'value');
+$bool = $bloomFilter->insert('key', 'value');
 // 过滤器添加多个值
 $array = $bloomFilter->madd('key', ['value1','value2','value3']);
 // 检测过滤器是否存在单个值
