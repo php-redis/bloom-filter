@@ -1,12 +1,21 @@
 # PHP Redis Bloom Filter
 
-## requirements
-redis version >= 4.0
-php version >= 7.2
-Installed plug-ins [RedisBloom](https://github.com/RedisBloom/RedisBloom)
-
 ## install
 composer require php-redis/bloom-filter
+
+## requirements
+redis version >= 4.0  
+php version >= 7.2  
+Installed plug-ins [RedisBloom](https://github.com/RedisBloom/RedisBloom)
+
+## how to install RedisBloom plug-ins ?
+git clone https://github.com/RedisBloom/RedisBloom.git  
+mv RedisBloom /usr/local  
+cd RedisBloom  
+make  
+
+vi /etc/redis/redis.conf  
+loadmodule /usr/local/RedisBloom/redisbloom.so INITIAL_SIZE 1000 ERROR_RATE 0.001  
 
 ## Basic Usage
 ```php
