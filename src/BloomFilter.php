@@ -9,7 +9,7 @@ namespace xming\BloomFilter;
 
 use Redis;
 
-class BloomFilter extends Redis
+class BloomFilter
 {
     /** Redis Config */
     private $host = '127.0.0.1';
@@ -19,6 +19,7 @@ class BloomFilter extends Redis
     private $retry_interval = 0;
     private $auth = null;
     private $database = 0;
+    private $redis;
 
     /**
      * @param array|null $config
@@ -31,9 +32,10 @@ class BloomFilter extends Redis
         $this->reserved = $config['reserved'] ?? $this->reserved;
         $this->retry_interval = $config['retry_interval'] ?? $this->retry_interval;
         $this->database = $config['database'] ?? $this->database;
-        $this->connect($this->host, $this->port, $this->timeout, $this->reserved, $this->retry_interval);
-        $this->auth($this->auth);
-        $this->select($this->database);
+        $this->redis = new Redis();
+        $this->redis->connect($this->host, $this->port, $this->timeout, $this->reserved, $this->retry_interval);
+        $this->redis->auth($this->auth);
+        $this->redis->select($this->database);
     }
 
     /**
@@ -47,7 +49,7 @@ class BloomFilter extends Redis
     {
         $arguments = [$key, $errorRate, $capacity];
 
-        return $this->rawCommand(Commands::BF_RESERVE, ...$arguments);
+        return $this->redis->rawCommand(Commands::BF_RESERVE, ...$arguments);
     }
 
     /**
@@ -60,7 +62,7 @@ class BloomFilter extends Redis
     {
         $arguments = [$key, $value];
 
-        return $this->rawCommand(Commands::BF_ADD, ...$arguments);
+        return $this->redis->rawCommand(Commands::BF_ADD, ...$arguments);
     }
 
     /**
@@ -73,7 +75,7 @@ class BloomFilter extends Redis
     {
         $arguments = array_merge([$key], $values);
 
-        return $this->rawCommand(Commands::BF_MADD, ...$arguments);
+        return $this->redis->rawCommand(Commands::BF_MADD, ...$arguments);
     }
 
     /**
@@ -82,11 +84,11 @@ class BloomFilter extends Redis
      *
      * @return bool
      */
-    public function exist($key, $value)
+    public function exists($key, $value)
     {
         $arguments = [$key, $value];
 
-        return $this->rawCommand(Commands::BF_EXISTS, ...$arguments);
+        return $this->redis->rawCommand(Commands::BF_EXISTS, ...$arguments);
     }
 
     /**
@@ -99,7 +101,7 @@ class BloomFilter extends Redis
     {
         $arguments = array_merge([$key], $values);
 
-        return $this->rawCommand(Commands::BF_MEXISTS, ...$arguments);
+        return $this->redis->rawCommand(Commands::BF_MEXISTS, ...$arguments);
     }
 
     /**
@@ -112,7 +114,7 @@ class BloomFilter extends Redis
     {
         $arguments = [$key, $value];
 
-        return $this->rawCommand(Commands::BF_INSERT, ...$arguments);
+        return $this->redis->rawCommand(Commands::BF_INSERT, ...$arguments);
     }
 
     /**
