@@ -13,7 +13,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "xming\\BloomFilter\\": "./src"
+            "xming\\filters\\": "./src"
         }
     }
 }

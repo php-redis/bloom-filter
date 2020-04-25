@@ -21,7 +21,7 @@ loadmodule /usr/local/RedisBloom/redisbloom.so INITIAL_SIZE 1000 ERROR_RATE 0.00
 ```php
 <?php
 
-use xming\BloomFilter\BloomFilter;
+use xming\filters\BloomFilter;
 
 // options：host part auth timeout reserved retry_interval database 
 $bloomFilter = new BloomFilter();

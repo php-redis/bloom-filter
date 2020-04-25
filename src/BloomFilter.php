@@ -5,7 +5,7 @@
  * @license   MIT
  * @link      https://github.com/php-redis/bloom-filter
  */
-namespace xming\BloomFilter;
+namespace xming\filters;
 
 use Redis;
 

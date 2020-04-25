@@ -1,5 +1,5 @@
 <?php
-namespace xming\BloomFilter;
+namespace xming\filters;
 
 class Commands
 {
