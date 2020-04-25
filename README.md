@@ -1,14 +1,14 @@
 # PHP Redis Bloom Filter
 
-## install
+## Install
 composer require php-redis/bloom-filter
 
-## requirements
+## Requirements
 redis version >= 4.0  
 php version >= 7.2  
 Installed plug-ins [RedisBloom](https://github.com/RedisBloom/RedisBloom)
 
-## how to install RedisBloom plug-ins ?
+## How to install RedisBloom plug-ins ?
 git clone https://github.com/RedisBloom/RedisBloom.git  
 mv RedisBloom /usr/local  
 cd RedisBloom  
@@ -23,6 +23,7 @@ loadmodule /usr/local/RedisBloom/redisbloom.so INITIAL_SIZE 1000 ERROR_RATE 0.00
 
 use xming\BloomFilter\BloomFilter;
 
+// options：host part auth timeout reserved retry_interval database 
 $bloomFilter = new BloomFilter();
 $bloomFilter = new BloomFilter(['host' => '192.168.20.6']);
 $bloomFilter = new BloomFilter(['host' => '192.168.20.6', 'part'=>6379]);
