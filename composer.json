@@ -1,7 +1,7 @@
 {
     "name": "php-redis/bloom-filter",
-    "description": "php-redis/bloom-filter\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[-",
-    "type": "project",
+    "description": "bloom",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -9,6 +9,6 @@
             "email": "980315926pxm@163.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {}
 }
