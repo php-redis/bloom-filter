@@ -1,19 +1,39 @@
 <?php
+/**
+ * @project   PhpRedis BloomFilter
+ * @author    xming <980315926pxm@163.com>
+ * @license   MIT
+ * @link      https://github.com/php-redis/bloom-filter
+ */
 namespace xming\BloomFilter;
 
 use Redis;
 
 class BloomFilter extends Redis
 {
-    public $host = '49.233.86.162';
-    public $port = 6379;
-    public $auth = null;
-    public $timeout = 2;
+    /** Redis Config */
+    private $host = '127.0.0.1';
+    private $port = 6379;
+    private $timeout = 0.0;
+    private $reserved = null;
+    private $retry_interval = 0;
+    private $auth = null;
+    private $database = 0;
 
-    public function __construct()
+    /**
+     * @param array|null $config
+     */
+    public function __construct($config = null)
     {
-        $this->connect($this->host, $this->port, $this->timeout);
+        $this->host = $config['host'] ?? $this->host;
+        $this->port = $config['port'] ?? $this->port;
+        $this->timeout = $config['timeout'] ?? $this->timeout;
+        $this->reserved = $config['reserved'] ?? $this->reserved;
+        $this->retry_interval = $config['retry_interval'] ?? $this->retry_interval;
+        $this->database = $config['database'] ?? $this->database;
+        $this->connect($this->host, $this->port, $this->timeout, $this->reserved, $this->retry_interval);
         $this->auth($this->auth);
+        $this->select($this->database);
     }
 
     /**
@@ -93,5 +113,21 @@ class BloomFilter extends Redis
         $arguments = [$key, $value];
 
         return $this->rawCommand(Commands::BF_INSERT, ...$arguments);
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        return [
+            'host' => $this->host,
+            'port' => $this->port,
+            'timeout' => $this->timeout,
+            'reserved' => $this->reserved,
+            'retry_interval' => $this->retry_interval,
+            'auth' => $this->auth,
+            'database' => $this->database,
+        ];
     }
 }
