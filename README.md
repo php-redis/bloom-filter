@@ -23,7 +23,7 @@ loadmodule /usr/local/RedisBloom/redisbloom.so INITIAL_SIZE 1000 ERROR_RATE 0.00
 
 use PHPRedis\Filters\BloomFilter;
 
-// options：host part auth timeout reserved retry_interval database 
+// options：host part auth timeout reserved retry_interval read_timeout database 
 $bloomFilter = new BloomFilter();
 $bloomFilter = new BloomFilter(['host' => '192.168.20.6']);
 $bloomFilter = new BloomFilter(['host' => '192.168.20.6', 'part'=>6379]);
