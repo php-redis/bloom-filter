@@ -28,6 +28,11 @@ $bloomFilter = new BloomFilter();
 $bloomFilter = new BloomFilter(['host' => '192.168.20.6']);
 $bloomFilter = new BloomFilter(['host' => '192.168.20.6', 'part'=>6379]);
 $bloomFilter = new BloomFilter(['host' => '192.168.20.6', 'part'=>6380, 'auth' => 123456]);
+
+$bloomFilter->setConfig('127.0.0.1', 6379, null);
+$bloomFilter->setHost('127.0.0.1');
+$bloomFilter->setPort(6379);
+
 // 新建过滤器 $errorRate：容错率取值范围(0,1) $capacity：容量
 $bool = $bloomFilter->reserve('key', 0.001, 1000);
 // 过滤器添加单个值

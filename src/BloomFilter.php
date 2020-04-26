@@ -7,37 +7,11 @@
  */
 namespace PHPRedis\Filters;
 
+use Exception;
 use Redis;
 
-class BloomFilter
+class BloomFilter extends RedisServer
 {
-    /** Redis Config */
-    private $host = '127.0.0.1';
-    private $port = 6379;
-    private $timeout = 0.0;
-    private $reserved = null;
-    private $retry_interval = 0;
-    private $auth = null;
-    private $database = 0;
-    private $redis;
-
-    /**
-     * @param array|null $config
-     */
-    public function __construct($config = null)
-    {
-        $this->host = $config['host'] ?? $this->host;
-        $this->port = $config['port'] ?? $this->port;
-        $this->timeout = $config['timeout'] ?? $this->timeout;
-        $this->reserved = $config['reserved'] ?? $this->reserved;
-        $this->retry_interval = $config['retry_interval'] ?? $this->retry_interval;
-        $this->database = $config['database'] ?? $this->database;
-        $this->redis = new Redis();
-        $this->redis->connect($this->host, $this->port, $this->timeout, $this->reserved, $this->retry_interval);
-        $this->redis->auth($this->auth);
-        $this->redis->select($this->database);
-    }
-
     /**
      * @param string $key
      * @param float $errorRate range:(0,1)
@@ -47,6 +21,7 @@ class BloomFilter
      */
     public function reserve($key, $errorRate, $capacity)
     {
+        $this->connect();
         $arguments = [$key, $errorRate, $capacity];
 
         return $this->redis->rawCommand(Commands::BF_RESERVE, ...$arguments);
@@ -60,6 +35,7 @@ class BloomFilter
      */
     public function add($key, $value)
     {
+        $this->connect();
         $arguments = [$key, $value];
 
         return $this->redis->rawCommand(Commands::BF_ADD, ...$arguments);
@@ -73,6 +49,7 @@ class BloomFilter
      */
     public function madd($key, $values)
     {
+        $this->connect();
         $arguments = array_merge([$key], $values);
 
         return $this->redis->rawCommand(Commands::BF_MADD, ...$arguments);
@@ -86,6 +63,7 @@ class BloomFilter
      */
     public function exists($key, $value)
     {
+        $this->connect();
         $arguments = [$key, $value];
 
         return $this->redis->rawCommand(Commands::BF_EXISTS, ...$arguments);
@@ -99,6 +77,7 @@ class BloomFilter
      */
     public function mexists($key, $values)
     {
+        $this->connect();
         $arguments = array_merge([$key], $values);
 
         return $this->redis->rawCommand(Commands::BF_MEXISTS, ...$arguments);
@@ -112,24 +91,10 @@ class BloomFilter
      */
     public function insert($key, $value)
     {
+        $this->connect();
         $arguments = [$key, $value];
 
         return $this->redis->rawCommand(Commands::BF_INSERT, ...$arguments);
     }
 
-    /**
-     * @return array
-     */
-    public function getConfig()
-    {
-        return [
-            'host' => $this->host,
-            'port' => $this->port,
-            'timeout' => $this->timeout,
-            'reserved' => $this->reserved,
-            'retry_interval' => $this->retry_interval,
-            'auth' => $this->auth,
-            'database' => $this->database,
-        ];
-    }
 }
