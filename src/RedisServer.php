@@ -37,6 +37,8 @@ class RedisServer
 
     /**
      * Connect to Redis
+     *
+     * @throws Exception
      */
     protected function connect()
     {

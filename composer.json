@@ -1,14 +1,17 @@
 {
     "name": "php-redis/bloom-filter",
-    "description": "bloom",
+    "description": "php-redis/bloom-filter",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "xming",
-            "email": "980315926pxm@163.com"
+            "homepage": "https://github.com/php-redis/bloom-filter"
         }
     ],
+    "support": {
+        "email": "980315926pxm@163.com"
+    },
     "minimum-stability": "stable",
     "require": {},
     "autoload": {
