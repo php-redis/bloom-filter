@@ -26,8 +26,8 @@ use PHPRedis\Filters\BloomFilter;
 // options：host part auth timeout reserved retry_interval read_timeout database 
 $bloomFilter = new BloomFilter();
 $bloomFilter = new BloomFilter(['host' => '192.168.20.6']);
-$bloomFilter = new BloomFilter(['host' => '192.168.20.6', 'part'=>6379]);
-$bloomFilter = new BloomFilter(['host' => '192.168.20.6', 'part'=>6380, 'auth' => 123456]);
+$bloomFilter = new BloomFilter(['host' => '192.168.20.6', 'port' => 6379]);
+$bloomFilter = new BloomFilter(['host' => '192.168.20.6', 'port' => 6380, 'auth' => 123456]);
 
 $bloomFilter->setConfig('127.0.0.1', 6379, null);
 $bloomFilter->setHost('127.0.0.1');
